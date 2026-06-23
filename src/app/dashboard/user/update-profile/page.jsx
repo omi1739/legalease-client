@@ -1,25 +1,55 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSession } from "@/lib/auth-client";
 
 export default function UpdateProfile() {
-  const { data: session } = useSession();
-  const [name, setName] = useState(session?.user?.name || "");
-  const [image, setImage] = useState(session?.user?.image || "");
+  const { data: session, refetch } = useSession();
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (session?.user) {
+      setName(session.user.name || "");
+      setImage(session.user.image || "");
+    }
+  }, [session]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!session?.user?.email) {
+      setMessage("You must be logged in to update your profile.");
+      return;
+    }
     setLoading(true);
     setMessage("");
 
-    // Simulate profile update
-    setTimeout(() => {
+    try {
+      const response = await fetch(`http://localhost:5000/users/${session.user.email}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, image }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+
+      const result = await response.json();
+      setMessage("Profile updated successfully!");
+      
+      // Sync/Refresh frontend session
+      await refetch();
+    } catch (err) {
+      console.error(err);
+      setMessage("Error updating profile. Please try again.");
+    } finally {
       setLoading(false);
-      setMessage("Profile updated successfully (Mock)!");
-    }, 1200);
+    }
   };
 
   return (
