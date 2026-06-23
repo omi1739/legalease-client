@@ -1,42 +1,64 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+const ArrowRight = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </svg>
+);
+
+const Star = (props) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+
+const Shield = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+  </svg>
+);
+
+const Users = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
+
+const Briefcase = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={props.className}>
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  </svg>
+);
 
 const practiceAreas = [
   {
     title: "Corporate Law",
     description: "Mergers, acquisitions, compliance, and corporate governance for businesses of all sizes.",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 21h18" /><path d="M5 21V7l8-4v18" /><path d="M11 3v18" /><path d="M17 21V11l-4-2" /><path d="M21 21V13l-4-2" />
-      </svg>
-    ),
+    icon: <Briefcase className="h-6 w-6" />,
   },
   {
     title: "Family Law",
     description: "Divorce, custody, adoption, and family dispute resolution with compassion.",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-      </svg>
-    ),
+    icon: <Users className="h-6 w-6" />,
   },
   {
     title: "Criminal Defense",
     description: "Expert legal representation for criminal cases from misdemeanors to serious charges.",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      </svg>
-    ),
+    icon: <Shield className="h-6 w-6" />,
   },
   {
     title: "Property Law",
     description: "Real estate transactions, title disputes, landlord-tenant matters, and property rights.",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-8 w-8 fill-none stroke-current" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
-      </svg>
-    ),
+    icon: <ArrowRight className="h-6 w-6" />,
   },
 ];
 
@@ -83,26 +105,75 @@ function StarRating({ rating }) {
   return (
     <div className="flex gap-1">
       {Array.from({ length: rating }, (_, i) => (
-        <svg key={i} viewBox="0 0 20 20" className="h-5 w-5 fill-[var(--brand-accent)]" aria-hidden="true">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
+        <Star key={i} className="h-4 w-4 fill-[var(--brand-accent)] text-[var(--brand-accent)]" />
       ))}
     </div>
   );
 }
 
 export default function Home() {
+  const [featuredLawyers, setFeaturedLawyers] = useState([]);
+  const [topExperts, setTopExperts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch lawyers data on mount
+  useEffect(() => {
+    const getLawyers = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/lawyers?limit=12");
+        if (res.ok) {
+          const data = await res.json();
+          const list = data.lawyers || [];
+          
+          // Latest 6 for Featured Section
+          setFeaturedLawyers(list.slice(0, 6));
+
+          // Sort by hires count descending, take top 3 for Top Experts
+          const sortedByHires = [...list].sort((a, b) => b.hires - a.hires);
+          setTopExperts(sortedByHires.slice(0, 3));
+        }
+      } catch (err) {
+        console.error("Failed to load lawyers for home page", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getLawyers();
+  }, []);
+
+  // Animation variants
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
   return (
     <>
+      {/* Hero Section */}
       <section className="relative overflow-hidden bg-[#041927] py-20 sm:py-28">
         <div className="absolute inset-x-0 top-0 h-72" style={{ background: "radial-gradient(circle at top, rgba(217,154,30,0.18), transparent 40%)" }} />
         <div className="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="relative flex flex-col justify-center rounded-4xl border border-white/10 bg-slate-950/80 p-10 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-14">
-            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300 shadow-sm shadow-cyan-500/10">
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={fadeIn}
+            className="relative flex flex-col justify-center rounded-4xl border border-white/10 bg-slate-950/80 p-10 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-14"
+          >
+            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300 shadow-sm shadow-cyan-500/10 self-start">
               Trusted legal marketplace
             </span>
             <h1 className="mt-8 text-5xl font-semibold tracking-tight text-white sm:text-6xl">
-              Find expert legal counsel for every case.
+              Find & Hire Expert Legal Counsel.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
               LegalEase helps you connect with vetted lawyers, manage hiring, and keep legal support within reach—fast, secure, and professional.
@@ -127,7 +198,7 @@ export default function Home() {
 
             <div className="mt-12 grid gap-4 sm:grid-cols-3">
               <div className="rounded-3xl bg-white/5 p-5">
-                <p className="text-3xl font-semibold text-white">20+</p>
+                <p className="text-3xl font-semibold text-white">50+</p>
                 <p className="mt-3 text-sm text-slate-400">Trusted lawyers</p>
               </div>
               <div className="rounded-3xl bg-white/5 p-5">
@@ -139,39 +210,45 @@ export default function Home() {
                 <p className="mt-3 text-sm text-slate-400">Verified hiring flow</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="relative flex items-center justify-center">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="relative flex items-center justify-center"
+          >
             <div className="absolute -right-14 top-10 h-52 w-52 rounded-full" style={{ backgroundColor: "rgba(217,154,30,0.10)" }} />
-            <div className="relative max-w-md overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-2xl shadow-slate-950/20">
+            <div className="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-2xl shadow-slate-950/20">
               <div className="flex items-center gap-4">
                 <div className="relative h-16 w-16 overflow-hidden rounded-3xl bg-slate-900/80">
-                  <Image src="/assets/logo.png" alt="Advocate Priya" fill className="object-cover" />
+                  <Image src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80" alt="Advocate Patricia" fill sizes="64px" className="object-cover" />
                 </div>
                 <div>
                   <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Featured lawyer</p>
-                  <p className="mt-1 text-xl font-semibold text-white">Advocate Priya</p>
+                  <p className="mt-1 text-xl font-semibold text-white">Patricia M. Vance</p>
                 </div>
               </div>
               <div className="mt-8 space-y-4">
                 <div className="rounded-3xl bg-white/5 p-4">
                   <p className="text-sm text-slate-400">Specialization</p>
-                  <p className="mt-1 text-white">Corporate & Contract Law</p>
+                  <p className="mt-1 text-white">Family & Custody Law</p>
                 </div>
                 <div className="rounded-3xl bg-white/5 p-4">
                   <p className="text-sm text-slate-400">Consultation Fee</p>
-                  <p className="mt-1 text-white">$75 / hour</p>
+                  <p className="mt-1 text-white">$120 / hour</p>
                 </div>
               </div>
               <div className="mt-8 flex flex-wrap gap-2">
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs uppercase tracking-[0.3em] text-slate-300">Corporate</span>
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs uppercase tracking-[0.3em] text-slate-300">Family</span>
+                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300">Family</span>
+                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300">Estate</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
+      {/* How it works */}
       <section id="how" className="bg-[#04111f] py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
@@ -203,33 +280,151 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Dynamic Featured Lawyers Section */}
       <section className="bg-[#041927] py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-2xl text-center mb-16">
             <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
-              Practice areas
+              Experts Selected For You
             </span>
             <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Areas of expertise
+              Featured Lawyers
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-400">
-              Specialized legal support across every major practice area.
+              Meet our latest legal counselors available to take your case.
             </p>
           </div>
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {practiceAreas.map((area) => (
-              <div key={area.title} className="group rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.7)] transition duration-300 hover:border-[var(--brand-accent)]/40">
-                <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white/5 text-slate-300 transition duration-300 group-hover:bg-[var(--brand-accent)]/20 group-hover:text-[var(--brand-accent)]">
-                  {area.icon}
+
+          {loading ? (
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="animate-pulse rounded-4xl border border-white/10 bg-slate-950/60 p-6 space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div className="h-16 w-16 rounded-3xl bg-white/5" />
+                    <div className="flex-grow space-y-2">
+                      <div className="h-4 w-2/3 bg-white/10 rounded-full" />
+                      <div className="h-3 w-1/2 bg-white/5 rounded-full" />
+                    </div>
+                  </div>
+                  <div className="h-10 w-full bg-white/10 rounded-full" />
                 </div>
-                <h3 className="mt-6 text-lg font-semibold text-white">{area.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-400">{area.description}</p>
+              ))}
+            </div>
+          ) : (
+            <motion.div 
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {featuredLawyers.map((lawyer) => (
+                <motion.div
+                  key={lawyer.name}
+                  variants={fadeIn}
+                  whileHover={{ scale: 1.02 }}
+                  className="group rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-xl transition hover:border-[var(--brand-accent)]/30"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="relative h-16 w-16 overflow-hidden rounded-3xl bg-slate-900/80">
+                      <Image src={lawyer.avatar || "/assets/logo.png"} alt={lawyer.name} fill sizes="64px" className="object-cover" />
+                    </div>
+                    <div>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium text-slate-400">
+                        ★ {lawyer.rating}
+                      </span>
+                      <h3 className="mt-1 text-lg font-semibold text-white group-hover:text-[var(--brand-accent)] transition">
+                        {lawyer.name}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-xs uppercase tracking-wider text-slate-400">{lawyer.specialization}</span>
+                    <span className="text-sm font-semibold text-white">${lawyer.hourlyRate} / hr</span>
+                  </div>
+                  <p className="mt-4 text-xs leading-5 text-slate-400 line-clamp-2">{lawyer.bio}</p>
+                  <Link
+                    href={`/browse/${lawyer.name}`}
+                    className="mt-6 flex w-full justify-center rounded-full border border-white/10 bg-white/5 px-6 py-2.5 text-xs font-semibold text-slate-200 transition hover:bg-[var(--brand-accent)] hover:text-[var(--brand-accent-contrast)] hover:border-[var(--brand-accent)]"
+                  >
+                    View Details
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* Extra Section 1: Top Legal Experts */}
+      <section className="bg-[#04111f] py-20 sm:py-28 border-t border-white/5">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mx-auto max-w-2xl text-center mb-16">
+            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
+              Most Hired Specialists
+            </span>
+            <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              Top Legal Experts
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-slate-400">
+              Meet our most hired professionals on the platform.
+            </p>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-3 max-w-4xl mx-auto">
+            {topExperts.map((lawyer) => (
+              <div key={lawyer.name} className="flex flex-col items-center rounded-4xl border border-white/5 bg-slate-950/40 p-8 text-center shadow-lg hover:border-white/10 transition duration-300">
+                <div className="relative h-24 w-24 overflow-hidden rounded-full ring-2 ring-[var(--brand-accent)] bg-slate-900/80">
+                  <Image src={lawyer.avatar || "/assets/logo.png"} alt={lawyer.name} fill sizes="96px" className="object-cover" />
+                </div>
+                <h3 className="mt-6 text-lg font-semibold text-white">{lawyer.name}</h3>
+                <p className="mt-1 text-xs text-slate-400 uppercase tracking-widest">{lawyer.specialization}</p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--brand-accent)]/10 px-3 py-1 text-xs font-medium text-[var(--brand-accent)]">
+                  {lawyer.hires} Hires Completed
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
+      {/* Extra Section 2: Legal Categories */}
+      <section className="bg-[#041927] py-20 sm:py-28 border-t border-white/5">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="mx-auto max-w-2xl text-center mb-16">
+            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
+              Explore Practice Areas
+            </span>
+            <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              Legal Categories
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-slate-400">
+              Select a specialized category to start filtering legal experts.
+            </p>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {practiceAreas.map((area) => (
+              <Link 
+                key={area.title} 
+                href={`/browse?specialization=${encodeURIComponent(area.title)}`}
+                className="group rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-md transition duration-300 hover:border-[var(--brand-accent)]/40 hover:-translate-y-1 block"
+              >
+                <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white/5 text-slate-300 transition duration-300 group-hover:bg-[var(--brand-accent)]/20 group-hover:text-[var(--brand-accent)]">
+                  {area.icon}
+                </div>
+                <h3 className="mt-6 text-lg font-semibold text-white group-hover:text-[var(--brand-accent)] transition">{area.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-400">{area.description}</p>
+                <div className="mt-6 flex items-center gap-2 text-xs font-semibold text-[var(--brand-accent)] opacity-0 group-hover:opacity-100 transition duration-300">
+                  <span>Explore Category</span>
+                  <ArrowRight className="h-3 w-3" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
       <section className="bg-[#04111f] py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
@@ -259,38 +454,6 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#041927] py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="relative overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 px-8 py-16 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.5)] sm:px-16 sm:py-20">
-            <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full" style={{ backgroundColor: "rgba(217,154,30,0.08)" }} />
-            <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full" style={{ backgroundColor: "rgba(217,154,30,0.06)" }} />
-            <div className="relative mx-auto max-w-2xl text-center">
-              <h2 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                Ready to find your legal match?
-              </h2>
-              <p className="mt-6 text-lg leading-8 text-slate-400">
-                Join hundreds of clients who have found expert legal counsel through LegalEase.
-              </p>
-              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Link
-                  href="/browse"
-                  className="inline-flex items-center justify-center rounded-full px-8 py-3 text-sm font-semibold shadow-[0_18px_60px_-28px_rgba(217,154,30,0.7)] transition hover:bg-[#f8c232]"
-                  style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
-                >
-                  Browse Lawyers
-                </Link>
-                <Link
-                  href="/login"
-                  className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-medium text-slate-200 transition hover:border-white/20 hover:text-white"
-                >
-                  Sign Up Free
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </section>

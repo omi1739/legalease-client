@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Patricia M. Vance",
+    "specialization": "Family Law",
+    "bio": "Experienced family lawyer specializing in divorce mediation, child custody agreements, and estate planning with over 12 years of practice.",
+    "hourlyRate": 120,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 48,
+    "rating": 4.9
+  },
+  {
+    "name": "Marcus A. Thorne",
+    "specialization": "Corporate Law",
+    "bio": "Expert legal counsel for tech startups and corporate scaling. Specializes in M&A, seed funding rounds, IP protection, and compliance.",
+    "hourlyRate": 180,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 67,
+    "rating": 5.0
+  },
+  {
+    "name": "Elena R. Rostova",
+    "specialization": "Criminal Defense",
+    "bio": "Dedicated criminal defense attorney handling state and federal trials. Committed to protecting constitutional rights and civil liberties.",
+    "hourlyRate": 150,
+    "isAvailable": false,
+    "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 39,
+    "rating": 4.8
+  },
+  {
+    "name": "Jonathan K. Sterling",
+    "specialization": "Property Law",
+    "bio": "Specializes in commercial real estate acquisitions, zoning disputes, title clearing, and landlord-tenant litigation.",
+    "hourlyRate": 95,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 55,
+    "rating": 4.7
+  },
+  {
+    "name": "Sarah J. Jenkins",
+    "specialization": "Family Law",
+    "bio": "Compassionate representation in domestic relations, adoption cases, prenuptial agreements, and guardianship laws.",
+    "hourlyRate": 110,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 34,
+    "rating": 4.9
+  },
+  {
+    "name": "David L. Vance",
+    "specialization": "Corporate Law",
+    "bio": "Focuses on tax structuring, corporate governance, cross-border transactions, and contract drafting for multinational firms.",
+    "hourlyRate": 210,
+    "isAvailable": false,
+    "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 72,
+    "rating": 4.9
+  },
+  {
+    "name": "Chloe N. Dubois",
+    "specialization": "Property Law",
+    "bio": "Assists buyers and sellers with residential real estate transactions, contract review, boundary lines, and HOA disputes.",
+    "hourlyRate": 85,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 41,
+    "rating": 4.6
+  },
+  {
+    "name": "Robert T. Fletcher",
+    "specialization": "Criminal Defense",
+    "bio": "Defending clients against major traffic violations, white-collar crimes, DUI/OUI, and misdemeanor charges.",
+    "hourlyRate": 140,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 50,
+    "rating": 4.7
+  },
+  {
+    "name": "Amina Al-Jamil",
+    "specialization": "Intellectual Property",
+    "bio": "Protecting digital assets, trademarks, copyrights, software licenses, and patent filings for artists and technologists.",
+    "hourlyRate": 160,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 28,
+    "rating": 4.8
+  },
+  {
+    "name": "Michael S. Brody",
+    "specialization": "Civil Litigation",
+    "bio": "Strong representation in personal injury claims, breach of contract lawsuits, and general civil disputes.",
+    "hourlyRate": 130,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 60,
+    "rating": 4.8
+  },
+  {
+    "name": "Sofia G. Bianchi",
+    "specialization": "Corporate Law",
+    "bio": "Advises boards on ESG compliance, shareholder relations, internal investigations, and corporate restructuring.",
+    "hourlyRate": 195,
+    "isAvailable": true,
+    "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 59,
+    "rating": 4.9
+  },
+  {
+    "name": "Albert K. Sterling",
+    "specialization": "Property Law",
+    "bio": "Specializes in zoning permissions, land redevelopment agreements, construction defects, and commercial leases.",
+    "hourlyRate": 115,
+    "isAvailable": false,
+    "avatar": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=400&h=400&q=80",
+    "hires": 46,
+    "rating": 4.7
+  }
+]
