@@ -1,0 +1,179 @@
+"use client";
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { signIn } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+
+export default function LoginPage() {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    const { email, password } = formData;
+
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
+
+    const { data, error: authError } = await signIn.email({
+      email,
+      password,
+      callbackURL: "/",
+    });
+
+    setLoading(false);
+
+    if (authError) {
+      setError(authError.message || "Invalid email or password. Please try again.");
+    } else {
+      setSuccess("Logged in successfully! Redirecting...");
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
+    }
+  };
+
+  return (
+    <div className="flex min-h-[85vh] items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-[#04111f]">
+      <div className="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-10">
+        <div className="absolute inset-x-0 top-0 h-40" style={{ background: "radial-gradient(circle at top, rgba(217,154,30,0.12), transparent 70%)" }} />
+        
+        <div className="relative text-center">
+          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            Welcome Back
+          </h2>
+          <p className="mt-2 text-sm text-slate-400">
+            Sign in to access your dashboard and legal files.
+          </p>
+        </div>
+
+        {error && (
+          <div className="mt-6 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-400">
+            {error}
+          </div>
+        )}
+
+        {success && (
+          <div className="mt-6 rounded-2xl border border-green-500/20 bg-green-500/10 p-4 text-sm text-green-400">
+            {success}
+          </div>
+        )}
+
+        <form className="relative mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-slate-300">
+                Email Address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-[var(--brand-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-accent)]"
+                placeholder="johndoe@example.com"
+              />
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="block text-sm font-medium text-slate-300">
+                  Password
+                </label>
+                <a href="#" className="text-xs text-[var(--brand-accent)] hover:underline">
+                  Forgot password?
+                </a>
+              </div>
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                required
+                value={formData.password}
+                onChange={handleChange}
+                className="mt-2 block w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-[var(--brand-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-accent)]"
+                placeholder="••••••••"
+              />
+            </div>
+
+            <div className="flex items-center">
+              <input
+                id="show-password"
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+                className="h-4 w-4 rounded border-white/10 bg-white/5 text-[var(--brand-accent)] focus:ring-[var(--brand-accent)]"
+              />
+              <label htmlFor="show-password" className="ml-2 block text-sm text-slate-400">
+                Show Password
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex w-full justify-center rounded-full px-8 py-3 text-sm font-semibold shadow-[0_18px_60px_-28px_rgba(217,154,30,0.7)] transition hover:bg-[#f8c232] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
+            >
+              {loading ? "Signing In..." : "Sign In"}
+            </button>
+          </div>
+
+          <div className="relative flex py-2 items-center">
+            <div className="flex-grow border-t border-white/10"></div>
+            <span className="flex-shrink mx-4 text-slate-500 text-xs uppercase tracking-wider">Or sign in with</span>
+            <div className="flex-grow border-t border-white/10"></div>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              className="flex w-full items-center justify-center gap-3 rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 cursor-pointer"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+                <g transform="matrix(1, 0, 0, 1, 0, 0)">
+                  <path d="M21.35,11.1H12v2.7h5.38c-0.24,1.28 -0.96,2.37 -2.04,3.1v2.58h3.3c1.93,-1.78 3.04,-4.4 3.04,-7.4C21.68,11.83 21.56,11.43 21.35,11.1z" fill="#4285F4" />
+                  <path d="M12,21c2.43,0 4.47,-0.8 5.96,-2.18l-3.3,-2.58c-0.92,0.62 -2.1,0.98 -3.66,0.98 -2.82,0 -5.2,-1.9 -6.05,-4.47H1.54v2.66C3.02,18.3 7.23,21 12,21z" fill="#34A853" />
+                  <path d="M5.95,12.73c-0.22,-0.66 -0.35,-1.37 -0.35,-2.1c0,-0.73 0.13,-1.44 0.35,-2.1V5.87H1.54C0.56,7.83 0,10.02 0,12.3c0,2.28 0.56,4.47 1.54,6.43L5.95,12.73z" fill="#FBBC05" />
+                  <path d="M12,5.7c1.32,0 2.5,0.45 3.44,1.35l2.58,-2.58C16.46,2.9 14.43,2 12,2 7.23,2 3.02,4.7 1.54,8.13l4.41,3.42C6.8,9 9.18,5.7 12,5.7z" fill="#EA4335" />
+                </g>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+          </div>
+        </form>
+
+        <div className="mt-8 text-center text-sm text-slate-400">
+          Don't have an account?{" "}
+          <Link href="/signup" className="font-semibold text-[var(--brand-accent)] hover:underline">
+            Register
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -154,7 +154,7 @@ const Navbar = () => {
               />
             </div>
             <Link
-              href="/register"
+              href="/signup"
               className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-slate-200 transition hover:border-white/20 hover:text-white"
             >
               Sign Up
@@ -202,7 +202,7 @@ const Navbar = () => {
               </div>
             </div>
             <Link
-              href="/register"
+              href="/signup"
               onClick={closeMobile}
               className="block rounded-full border border-white/10 bg-white/5 px-4 py-3 text-center text-sm font-medium text-slate-200 transition hover:border-white/20 hover:text-white"
             >
