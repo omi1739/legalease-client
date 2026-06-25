@@ -6,7 +6,7 @@ import { useSession } from "@/lib/auth-client";
 const CATEGORIES = ["Family Law", "Corporate Law", "Criminal Defense", "Property Law", "Intellectual Property", "Civil Litigation"];
 
 export default function ManageLegalProfile() {
-  const { data: session } = useSession();
+  const { data: session, reFetch } = useSession();
   
   const [specialization, setSpecialization] = useState("Family Law");
   const [bio, setBio] = useState("");
@@ -115,6 +115,9 @@ export default function ManageLegalProfile() {
         throw new Error("Failed to save profile.");
       }
 
+      if (reFetch) {
+        await reFetch();
+      }
       setMessage("Legal profile updated successfully!");
     } catch (err) {
       setError(err.message || "Failed to save profile details.");

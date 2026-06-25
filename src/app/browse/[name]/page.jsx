@@ -71,6 +71,7 @@ export default function LawyerDetails() {
   const [commentContent, setCommentContent] = useState("");
   const [commentRating, setCommentRating] = useState(5);
   const [submittingComment, setSubmittingComment] = useState(false);
+  const [activeTab, setActiveTab] = useState("about"); // "about" or "reviews"
 
   const fetchComments = async () => {
     try {
@@ -332,110 +333,140 @@ export default function LawyerDetails() {
                 </h2>
               </div>
 
-              {/* Bio Section */}
-              <div className="mt-8 border-t border-white/5 pt-6">
-                <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
-                  Professional Biography
-                </h4>
-                <p className="mt-4 text-sm leading-7 text-slate-300">
-                  {lawyer.bio}
-                </p>
+              {/* Tabs navigation */}
+              <div className="flex gap-6 border-b border-white/10 mt-8 pb-3">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("about")}
+                  className={`text-sm font-semibold uppercase tracking-wider pb-2 transition border-b-2 cursor-pointer ${
+                    activeTab === "about"
+                      ? "border-[var(--brand-accent)] text-white"
+                      : "border-transparent text-slate-400 hover:text-white"
+                  }`}
+                >
+                  About
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab("reviews")}
+                  className={`text-sm font-semibold uppercase tracking-wider pb-2 transition border-b-2 cursor-pointer ${
+                    activeTab === "reviews"
+                      ? "border-[var(--brand-accent)] text-white"
+                      : "border-transparent text-slate-400 hover:text-white"
+                  }`}
+                >
+                  Reviews ({comments.length})
+                </button>
               </div>
 
-              {/* Specifications / Highlights */}
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 border-t border-white/5 pt-6">
-                <div className="flex gap-3 items-start rounded-3xl bg-white/5 p-4">
-                  <Briefcase />
+              {/* Tab Content */}
+              {activeTab === "about" ? (
+                <div className="space-y-8 mt-6">
+                  {/* Bio Section */}
                   <div>
-                    <h5 className="text-xs font-semibold text-white uppercase tracking-wide">Experience</h5>
-                    <p className="text-xs text-slate-400 mt-1">{lawyer.hires}+ completed cases</p>
+                    <h4 className="text-sm font-semibold text-white uppercase tracking-wider">
+                      Professional Biography
+                    </h4>
+                    <p className="mt-4 text-sm leading-7 text-slate-300">
+                      {lawyer.bio}
+                    </p>
                   </div>
-                </div>
 
-                <div className="flex gap-3 items-start rounded-3xl bg-white/5 p-4">
-                  <Clock />
-                  <div>
-                    <h5 className="text-xs font-semibold text-white uppercase tracking-wide">Consultation Hours</h5>
-                    <p className="text-xs text-slate-400 mt-1">Mon - Fri, 9:00 AM - 5:00 PM</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  {/* Specifications / Highlights */}
+                  <div className="grid gap-4 sm:grid-cols-2 border-t border-white/5 pt-6">
+                    <div className="flex gap-3 items-start rounded-3xl bg-white/5 p-4">
+                      <Briefcase />
+                      <div>
+                        <h5 className="text-xs font-semibold text-white uppercase tracking-wide">Experience</h5>
+                        <p className="text-xs text-slate-400 mt-1">{lawyer.hires}+ completed cases</p>
+                      </div>
+                    </div>
 
-            {/* Comments & Reviews Section */}
-            <div className="rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-xl backdrop-blur-md space-y-6">
-              <h3 className="text-xl font-semibold text-white">Client Reviews & Comments</h3>
-              
-              {/* Comment submission form */}
-              {canComment ? (
-                <form onSubmit={handlePostComment} className="space-y-4 border-b border-white/10 pb-6">
-                  <p className="text-xs text-slate-400">You hired this professional. Leave your honest feedback below:</p>
-                  
-                  <div>
-                    <label className="block text-xs font-medium text-slate-300 uppercase mb-2">Rating</label>
-                    <div className="flex gap-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onClick={() => setCommentRating(star)}
-                          className="focus:outline-none transition hover:scale-110"
-                        >
-                          <Star filled={star <= commentRating} />
-                        </button>
-                      ))}
+                    <div className="flex gap-3 items-start rounded-3xl bg-white/5 p-4">
+                      <Clock />
+                      <div>
+                        <h5 className="text-xs font-semibold text-white uppercase tracking-wide">Consultation Hours</h5>
+                        <p className="text-xs text-slate-400 mt-1">Mon - Fri, 9:00 AM - 5:00 PM</p>
+                      </div>
                     </div>
                   </div>
-
-                  <div>
-                    <label htmlFor="comment-text" className="block text-xs font-medium text-slate-300 uppercase mb-2">Comment</label>
-                    <textarea
-                      id="comment-text"
-                      rows={3}
-                      required
-                      value={commentContent}
-                      onChange={(e) => setCommentContent(e.target.value)}
-                      placeholder="Write your review here..."
-                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-[var(--brand-accent)] focus:outline-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={submittingComment}
-                    className="rounded-full px-6 py-2 text-xs font-semibold shadow-md transition hover:bg-[#f8c232] cursor-pointer disabled:opacity-50"
-                    style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
-                  >
-                    {submittingComment ? "Posting..." : "Submit Review"}
-                  </button>
-                </form>
-              ) : (
-                <div className="text-xs text-slate-500 bg-white/5 border border-white/5 p-4 rounded-3xl">
-                  🔒 Only clients who have completed a consultation payment with {lawyer.name} can leave a review.
                 </div>
-              )}
-
-              {/* Comments list */}
-              <div className="space-y-4 pt-2">
-                {comments.length === 0 ? (
-                  <p className="text-sm text-slate-500">No reviews yet for {lawyer.name}.</p>
-                ) : (
-                  comments.map((comment) => (
-                    <div key={comment._id} className="rounded-3xl bg-white/5 p-5 border border-white/5 space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-sm text-white">{comment.clientName}</span>
-                        <div className="flex gap-0.5">
-                          {Array.from({ length: comment.rating }).map((_, idx) => (
-                            <Star key={idx} />
+              ) : (
+                <div className="space-y-6 mt-6">
+                  <h3 className="text-lg font-semibold text-white">Client Reviews & Comments</h3>
+                  
+                  {/* Comment submission form */}
+                  {canComment ? (
+                    <form onSubmit={handlePostComment} className="space-y-4 border-b border-white/10 pb-6">
+                      <p className="text-xs text-slate-400">You hired this professional. Leave your honest feedback below:</p>
+                      
+                      <div>
+                        <label className="block text-xs font-medium text-slate-300 uppercase mb-2">Rating</label>
+                        <div className="flex gap-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              key={star}
+                              type="button"
+                              onClick={() => setCommentRating(star)}
+                              className="focus:outline-none transition hover:scale-110"
+                            >
+                              <Star filled={star <= commentRating} />
+                            </button>
                           ))}
                         </div>
                       </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">"{comment.content}"</p>
-                      <span className="block text-[10px] text-slate-500 text-right">{comment.date}</span>
+
+                      <div>
+                        <label htmlFor="comment-text" className="block text-xs font-medium text-slate-300 uppercase mb-2">Comment</label>
+                        <textarea
+                          id="comment-text"
+                          rows={3}
+                          required
+                          value={commentContent}
+                          onChange={(e) => setCommentContent(e.target.value)}
+                          placeholder="Write your review here..."
+                          className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-[var(--brand-accent)] focus:outline-none"
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={submittingComment}
+                        className="rounded-full px-6 py-2 text-xs font-semibold shadow-md transition hover:bg-[#f8c232] cursor-pointer disabled:opacity-50"
+                        style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
+                      >
+                        {submittingComment ? "Posting..." : "Submit Review"}
+                      </button>
+                    </form>
+                  ) : (
+                    <div className="text-xs text-slate-500 bg-white/5 border border-white/5 p-4 rounded-3xl">
+                      🔒 Only clients who have completed a consultation payment with {lawyer.name} can leave a review.
                     </div>
-                  ))
-                )}
-              </div>
+                  )}
+
+                  {/* Comments list */}
+                  <div className="space-y-4 pt-2">
+                    {comments.length === 0 ? (
+                      <p className="text-sm text-slate-500">No reviews yet for {lawyer.name}.</p>
+                    ) : (
+                      comments.map((comment) => (
+                        <div key={comment._id} className="rounded-3xl bg-white/5 p-5 border border-white/5 space-y-2">
+                          <div className="flex justify-between items-center">
+                            <span className="font-semibold text-sm text-white">{comment.clientName}</span>
+                            <div className="flex gap-0.5">
+                              {Array.from({ length: comment.rating }).map((_, idx) => (
+                                <Star key={idx} />
+                              ))}
+                            </div>
+                          </div>
+                          <p className="text-xs text-slate-300 leading-relaxed">"{comment.content}"</p>
+                          <span className="block text-[10px] text-slate-500 text-right">{comment.date}</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

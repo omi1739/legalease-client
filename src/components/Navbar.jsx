@@ -89,9 +89,7 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#041927]/95 backdrop-blur-xl shadow-2xl shadow-slate-950/10">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link href="/" className="flex items-center gap-3" onClick={closeMobile}>
-          <div className="relative h-12 w-12 overflow-hidden rounded-3xl bg-slate-950/80 ring-1 ring-white/10 flex items-center justify-center">
-            <span className="text-xl font-bold text-[var(--brand-accent)]">LE</span>
-          </div>
+          <img src="/assets/logo.png" alt="LegalEase Logo" className="h-10 w-auto object-contain" />
           <div>
             <p className="text-xs uppercase tracking-[0.32em] text-slate-400">
               LegalEase

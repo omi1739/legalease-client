@@ -115,6 +115,41 @@ export default function Home() {
   const [featuredLawyers, setFeaturedLawyers] = useState([]);
   const [topExperts, setTopExperts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+
+  const carouselLawyers = [
+    {
+      name: "Patricia M. Vance",
+      specialization: "Family & Custody Law",
+      hourlyRate: 120,
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80",
+      tags: ["Family", "Mediation"],
+      icon: "⚖️"
+    },
+    {
+      name: "Marcus A. Thorne",
+      specialization: "Corporate Law",
+      hourlyRate: 180,
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80",
+      tags: ["M&A", "IP Protection"],
+      icon: "💼"
+    },
+    {
+      name: "David L. Vance",
+      specialization: "Corporate & Tax Law",
+      hourlyRate: 210,
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=400&q=80",
+      tags: ["Tax", "Structuring"],
+      icon: "🛡️"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % carouselLawyers.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Fetch lawyers data on mount
   useEffect(() => {
@@ -220,31 +255,66 @@ export default function Home() {
             className="relative flex items-center justify-center"
           >
             <div className="absolute -right-14 top-10 h-52 w-52 rounded-full" style={{ backgroundColor: "rgba(217,154,30,0.10)" }} />
-            <div className="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-2xl shadow-slate-950/20">
+            
+            <motion.div 
+              key={carouselIndex}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.4 }}
+              className="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-2xl shadow-slate-950/20"
+            >
               <div className="flex items-center gap-4">
                 <div className="relative h-16 w-16 overflow-hidden rounded-3xl bg-slate-900/80">
-                  <Image src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&h=150&q=80" alt="Advocate Patricia" fill sizes="64px" className="object-cover" />
+                  <Image 
+                    src={carouselLawyers[carouselIndex].image} 
+                    alt={carouselLawyers[carouselIndex].name} 
+                    fill 
+                    sizes="64px" 
+                    className="object-cover" 
+                  />
                 </div>
                 <div>
-                  <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Featured lawyer</p>
-                  <p className="mt-1 text-xl font-semibold text-white">Patricia M. Vance</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{carouselLawyers[carouselIndex].icon}</span>
+                    <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Featured Lawyer</p>
+                  </div>
+                  <p className="mt-1 text-xl font-semibold text-white">{carouselLawyers[carouselIndex].name}</p>
                 </div>
               </div>
+              
               <div className="mt-8 space-y-4">
                 <div className="rounded-3xl bg-white/5 p-4">
                   <p className="text-sm text-slate-400">Specialization</p>
-                  <p className="mt-1 text-white">Family & Custody Law</p>
+                  <p className="mt-1 text-white">{carouselLawyers[carouselIndex].specialization}</p>
                 </div>
                 <div className="rounded-3xl bg-white/5 p-4">
                   <p className="text-sm text-slate-400">Consultation Fee</p>
-                  <p className="mt-1 text-white">$120 / hour</p>
+                  <p className="mt-1 text-white">${carouselLawyers[carouselIndex].hourlyRate} / hour</p>
                 </div>
               </div>
+
               <div className="mt-8 flex flex-wrap gap-2">
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300">Family</span>
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300">Estate</span>
+                {carouselLawyers[carouselIndex].tags.map((tag) => (
+                  <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300">
+                    {tag}
+                  </span>
+                ))}
               </div>
-            </div>
+
+              {/* Slider Dots */}
+              <div className="mt-6 flex justify-center gap-2">
+                {carouselLawyers.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCarouselIndex(idx)}
+                    className={`h-2 w-2 rounded-full transition-all cursor-pointer ${
+                      idx === carouselIndex ? "w-6 bg-[var(--brand-accent)]" : "bg-white/20"
+                    }`}
+                  />
+                ))}
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
