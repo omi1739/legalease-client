@@ -1,13 +1,22 @@
-import { NextResponse } from 'next/server'
- 
-// This function can be marked `async` if using `await` inside
+import { NextResponse } from "next/server";
+import { getSessionCookie } from "better-auth/cookies";
+
 export function proxy(request) {
-  return NextResponse.redirect(new URL('/', request.url))
+  const pathname = request.nextUrl.pathname;
+
+  // Protect lawyer details page: /browse/[name] (but let /browse be public)
+  if (pathname.startsWith("/browse/") && pathname !== "/browse") {
+    const sessionCookie = getSessionCookie(request);
+    if (!sessionCookie) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("callbackURL", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
+  return NextResponse.next();
 }
- 
-// Alternatively, you can use a default export:
-// export default function proxy(request) { ... }
- 
+
 export const config = {
-  matcher: '/about/:path*',
-}
+  matcher: ["/browse/:path+"],
+};
