@@ -21,7 +21,7 @@ export default function Comments() {
     setLoading(true);
     setError("");
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/comments/user/${session.user.email}`, {
         credentials: "include",
@@ -48,7 +48,7 @@ export default function Comments() {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this review?")) return;
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/comments/${id}`, {
         method: "DELETE",
@@ -77,7 +77,7 @@ export default function Comments() {
     if (!newContent.trim()) return;
     setSubmittingEdit(true);
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/comments/${editingComment._id}`, {
         method: "PATCH",

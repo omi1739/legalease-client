@@ -24,7 +24,7 @@ export default function HiringHistory() {
     setLoading(true);
     setError("");
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/hires/user/${session.user.email}`, {
         credentials: "include",
@@ -68,7 +68,7 @@ export default function HiringHistory() {
     setPayError("");
 
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       
       // Step 1: Create Stripe Payment Intent on Backend
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
@@ -92,7 +92,7 @@ export default function HiringHistory() {
       // Step 2: Simulate client-side validation and PATCH update
       setTimeout(async () => {
         try {
-          const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+          const token = session?.session?.token;
           const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
           const updateRes = await fetch(`${apiUrl}/hires/${selectedHire._id}`, {
             method: "PATCH",

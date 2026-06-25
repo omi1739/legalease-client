@@ -88,7 +88,7 @@ export default function LawyerDetails() {
   const checkCommentPermission = async () => {
     if (!session?.user?.email) return;
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/hires/user/${session.user.email}`, {
         credentials: "include",
@@ -149,7 +149,7 @@ export default function LawyerDetails() {
   const handleConfirmHiring = async () => {
     setHiringProcessing(true);
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/hires`, {
         method: 'POST',
@@ -187,7 +187,7 @@ export default function LawyerDetails() {
     if (!commentContent.trim()) return;
     setSubmittingComment(true);
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/comments`, {
         method: 'POST',

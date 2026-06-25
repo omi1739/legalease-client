@@ -15,7 +15,7 @@ export default function LawyerHiringHistory() {
     setLoading(true);
     setError("");
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/hires/lawyer/${session.user.email}`, {
         credentials: "include",
@@ -42,7 +42,7 @@ export default function LawyerHiringHistory() {
   const handleUpdateStatus = async (id, status) => {
     setUpdatingId(id);
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/hires/${id}`, {
         method: "PATCH",

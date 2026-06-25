@@ -14,7 +14,7 @@ export default function ManageUsers() {
     setLoading(true);
     setError("");
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/admin/users`, {
         credentials: "include",
@@ -41,7 +41,7 @@ export default function ManageUsers() {
   const handleChangeRole = async (email, newRole) => {
     setUpdatingEmail(email);
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/admin/users/${email}`, {
         method: "PATCH",
@@ -69,7 +69,7 @@ export default function ManageUsers() {
   const handleDeleteUser = async (id) => {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
-      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const token = session?.session?.token;
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/admin/users/${id}`, {
         method: "DELETE",
