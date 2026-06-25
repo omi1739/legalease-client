@@ -5,7 +5,7 @@
 ---
 
 ## 🔗 Live Site
-👉 **Live URL:** [https://legalease-client-omi1739.vercel.app](https://legalease-client-platform.vercel.app) *(or your deployed production domain)*
+👉 **Live URL:** [https://legalease-client-omi1739.vercel.app](https://legalease-client-omi1739.vercel.app)
 
 ---
 
