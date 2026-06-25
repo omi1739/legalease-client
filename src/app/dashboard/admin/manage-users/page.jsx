@@ -137,9 +137,9 @@ export default function ManageUsers() {
                   <td className="px-6 py-4">
                     <select
                       value={row.role || "user"}
-                      disabled={updatingEmail === row.email}
+                      disabled={updatingEmail === row.email || row.email === session?.user?.email}
                       onChange={(e) => handleChangeRole(row.email, e.target.value)}
-                      className="rounded-xl border border-white/10 bg-slate-950 px-3 py-1.5 text-xs text-slate-300 focus:outline-none cursor-pointer"
+                      className="rounded-xl border border-white/10 bg-slate-950 px-3 py-1.5 text-xs text-slate-300 focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <option value="user" className="bg-slate-950">Client (User)</option>
                       <option value="lawyer" className="bg-slate-950">Lawyer</option>
@@ -149,7 +149,8 @@ export default function ManageUsers() {
                   <td className="px-6 py-4 text-right">
                     <button
                       onClick={() => handleDeleteUser(row.id || row._id)}
-                      className="rounded-full bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 px-3 py-1 text-xs font-bold transition cursor-pointer"
+                      disabled={row.email === session?.user?.email}
+                      className="rounded-full bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 px-3 py-1 text-xs font-bold transition cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       Delete
                     </button>
