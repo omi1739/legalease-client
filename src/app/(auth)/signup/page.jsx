@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { signUp } from "@/lib/auth-client";
+import { signUp, signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
@@ -70,6 +70,20 @@ export default function SignUpPage() {
       setTimeout(() => {
         router.push("/");
       }, 1500);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError("");
+    setSuccess("");
+    try {
+      await signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      setError("Google registration failed. Please try again.");
+      console.error(err);
     }
   };
 
@@ -261,6 +275,7 @@ export default function SignUpPage() {
           <div>
             <button
               type="button"
+              onClick={handleGoogleLogin}
               className="flex w-full items-center justify-center gap-3 rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 cursor-pointer"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">

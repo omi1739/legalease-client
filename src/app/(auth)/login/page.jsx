@@ -53,6 +53,20 @@ export default function LoginPage() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setError("");
+    setSuccess("");
+    try {
+      await signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (err) {
+      setError("Google sign-in failed. Please try again.");
+      console.error(err);
+    }
+  };
+
   return (
     <div className="flex min-h-[85vh] items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-[#04111f]">
       <div className="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-10">
@@ -152,6 +166,7 @@ export default function LoginPage() {
           <div>
             <button
               type="button"
+              onClick={handleGoogleLogin}
               className="flex w-full items-center justify-center gap-3 rounded-full border border-white/10 bg-white/5 px-8 py-3 text-sm font-semibold text-white transition hover:bg-white/10 cursor-pointer"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
