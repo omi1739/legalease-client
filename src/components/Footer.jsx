@@ -96,8 +96,8 @@ const Footer = () => {
               </h3>
               <ul className="mt-6 space-y-3 text-sm">
                 <li className="text-slate-400">contact@legalease.com</li>
-                <li className="text-slate-400">+1 (555) 123-4567</li>
-                <li className="text-slate-400">New York, NY 10001</li>
+                <li className="text-slate-400">+880-18461993103</li>
+                <li className="text-slate-400">Banasree, Dhaka</li>
               </ul>
             </div>
           </div>

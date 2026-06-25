@@ -20,8 +20,8 @@ const Calendar = () => (
   </svg>
 );
 
-const Star = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-[var(--brand-accent)]">
+const Star = ({ filled = true }) => (
+  <svg viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-[var(--brand-accent)]">
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
   </svg>
 );
@@ -53,7 +53,7 @@ const Clock = () => (
 export default function LawyerDetails() {
   const params = useParams();
   const router = useRouter();
-  const { data: session, isPending: sessionLoading } = useSession();
+  const { data: session } = useSession();
   
   const decodedName = params?.name ? decodeURIComponent(params.name) : "";
 
@@ -64,6 +64,42 @@ export default function LawyerDetails() {
   const [showModal, setShowModal] = useState(false);
   const [hiringProcessing, setHiringProcessing] = useState(false);
   const [hiringSuccess, setHiringSuccess] = useState(false);
+
+  // Comments States
+  const [comments, setComments] = useState([]);
+  const [canComment, setCanComment] = useState(false);
+  const [commentContent, setCommentContent] = useState("");
+  const [commentRating, setCommentRating] = useState(5);
+  const [submittingComment, setSubmittingComment] = useState(false);
+
+  const fetchComments = async () => {
+    try {
+      const res = await fetch(`http://localhost:5000/comments/${encodeURIComponent(decodedName)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setComments(data);
+      }
+    } catch (err) {
+      console.error("Failed to load comments", err);
+    }
+  };
+
+  const checkCommentPermission = async () => {
+    if (!session?.user?.email) return;
+    try {
+      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const res = await fetch(`http://localhost:5000/hires/user/${session.user.email}`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const hasPaidHired = data.some(hire => hire.lawyerName === decodedName && hire.status === 'paid');
+        setCanComment(hasPaidHired);
+      }
+    } catch (err) {
+      console.error("Failed to check comment permission", err);
+    }
+  };
 
   useEffect(() => {
     if (!decodedName) return;
@@ -89,30 +125,88 @@ export default function LawyerDetails() {
     };
 
     fetchLawyerDetails();
+    fetchComments();
   }, [decodedName]);
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      checkCommentPermission();
+    }
+  }, [session, decodedName]);
 
   const handleHireClick = () => {
     if (!session) {
-      // If not authenticated, redirect to login
-      router.push(`/login?callbackUrl=/browse/${encodeURIComponent(decodedName)}`);
+      router.push(`/login?callbackURL=/browse/${encodeURIComponent(decodedName)}`);
       return;
     }
     setShowModal(true);
   };
 
-  const handleConfirmHiring = () => {
+  const handleConfirmHiring = async () => {
     setHiringProcessing(true);
-    // Simulate API request/Stripe routing
-    setTimeout(() => {
+    try {
+      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const res = await fetch('http://localhost:5000/hires', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({
+          lawyerName: lawyer.name,
+          lawyerEmail: lawyer.email || "lawyer@example.com",
+          specialization: lawyer.specialization,
+          fee: lawyer.hourlyRate
+        })
+      });
+      if (res.ok) {
+        setHiringSuccess(true);
+        setTimeout(() => {
+          setShowModal(false);
+          setHiringSuccess(false);
+          router.push("/dashboard/user/hiring-history");
+        }, 2000);
+      } else {
+        alert("Failed to send hiring request");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
       setHiringProcessing(false);
-      setHiringSuccess(true);
-      setTimeout(() => {
-        setShowModal(false);
-        setHiringSuccess(false);
-        // Redirect to user hiring history dashboard
-        router.push("/dashboard/user/hiring-history");
-      }, 2000);
-    }, 1500);
+    }
+  };
+
+  const handlePostComment = async (e) => {
+    e.preventDefault();
+    if (!commentContent.trim()) return;
+    setSubmittingComment(true);
+    try {
+      const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+      const res = await fetch('http://localhost:5000/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({
+          lawyerName: decodedName,
+          content: commentContent,
+          rating: commentRating
+        })
+      });
+      if (res.ok) {
+        setCommentContent("");
+        setCommentRating(5);
+        fetchComments();
+      } else {
+        const data = await res.json();
+        alert(data.error || "Failed to post comment");
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmittingComment(false);
+    }
   };
 
   if (loading) {
@@ -218,7 +312,7 @@ export default function LawyerDetails() {
             </div>
           </div>
 
-          {/* Right Column: Information Tabs */}
+          {/* Right Column: Information Tabs & Comments */}
           <div className="space-y-6">
             <div className="rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-xl backdrop-blur-md">
               <div>
@@ -259,6 +353,82 @@ export default function LawyerDetails() {
                 </div>
               </div>
             </div>
+
+            {/* Comments & Reviews Section */}
+            <div className="rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-xl backdrop-blur-md space-y-6">
+              <h3 className="text-xl font-semibold text-white">Client Reviews & Comments</h3>
+              
+              {/* Comment submission form */}
+              {canComment ? (
+                <form onSubmit={handlePostComment} className="space-y-4 border-b border-white/10 pb-6">
+                  <p className="text-xs text-slate-400">You hired this professional. Leave your honest feedback below:</p>
+                  
+                  <div>
+                    <label className="block text-xs font-medium text-slate-300 uppercase mb-2">Rating</label>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setCommentRating(star)}
+                          className="focus:outline-none transition hover:scale-110"
+                        >
+                          <Star filled={star <= commentRating} />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="comment-text" className="block text-xs font-medium text-slate-300 uppercase mb-2">Comment</label>
+                    <textarea
+                      id="comment-text"
+                      rows={3}
+                      required
+                      value={commentContent}
+                      onChange={(e) => setCommentContent(e.target.value)}
+                      placeholder="Write your review here..."
+                      className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder-slate-500 focus:border-[var(--brand-accent)] focus:outline-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submittingComment}
+                    className="rounded-full px-6 py-2 text-xs font-semibold shadow-md transition hover:bg-[#f8c232] cursor-pointer disabled:opacity-50"
+                    style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
+                  >
+                    {submittingComment ? "Posting..." : "Submit Review"}
+                  </button>
+                </form>
+              ) : (
+                <div className="text-xs text-slate-500 bg-white/5 border border-white/5 p-4 rounded-3xl">
+                  🔒 Only clients who have completed a consultation payment with {lawyer.name} can leave a review.
+                </div>
+              )}
+
+              {/* Comments list */}
+              <div className="space-y-4 pt-2">
+                {comments.length === 0 ? (
+                  <p className="text-sm text-slate-500">No reviews yet for {lawyer.name}.</p>
+                ) : (
+                  comments.map((comment) => (
+                    <div key={comment._id} className="rounded-3xl bg-white/5 p-5 border border-white/5 space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-sm text-white">{comment.clientName}</span>
+                        <div className="flex gap-0.5">
+                          {Array.from({ length: comment.rating }).map((_, idx) => (
+                            <Star key={idx} />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">"{comment.content}"</p>
+                      <span className="block text-[10px] text-slate-500 text-right">{comment.date}</span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -287,8 +457,8 @@ export default function LawyerDetails() {
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold text-white">Hiring Confirmed!</h3>
-                  <p className="mt-2 text-xs text-slate-400">Your request has been sent. Redirecting to history...</p>
+                  <h3 className="text-xl font-semibold text-white">Hiring Request Sent!</h3>
+                  <p className="mt-2 text-xs text-slate-400">Your request has been sent to {lawyer.name}. Redirecting to history...</p>
                 </div>
               ) : (
                 <div>
@@ -303,14 +473,18 @@ export default function LawyerDetails() {
                       <span className="font-semibold text-white">${lawyer.hourlyRate}</span>
                     </div>
                     <div className="flex justify-between text-xs text-slate-400">
-                      <span>Processing Fee</span>
+                      <span>Zonal Processing Fee</span>
                       <span className="font-semibold text-white">$5.00</span>
                     </div>
                     <div className="border-t border-white/5 pt-3 flex justify-between text-sm text-white font-semibold">
-                      <span>Due Now</span>
+                      <span>Estimated Due</span>
                       <span className="text-[var(--brand-accent)]">${lawyer.hourlyRate + 5}</span>
                     </div>
                   </div>
+
+                  <p className="text-[10px] text-slate-500 mt-4 leading-normal">
+                    * The request will be sent to the lawyer's dashboard. You can make the Stripe payment once the lawyer accepts your request.
+                  </p>
 
                   <div className="mt-8 flex gap-3">
                     <button
@@ -326,7 +500,7 @@ export default function LawyerDetails() {
                       className="flex-1 justify-center flex rounded-full px-5 py-2.5 text-xs font-semibold transition hover:bg-[#f8c232] cursor-pointer disabled:opacity-30"
                       style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
                     >
-                      {hiringProcessing ? "Sending..." : "Confirm & Pay"}
+                      {hiringProcessing ? "Sending..." : "Send Request"}
                     </button>
                   </div>
                 </div>
