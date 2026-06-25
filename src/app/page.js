@@ -195,55 +195,55 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-[#041927] py-20 sm:py-28">
-        <div className="absolute inset-x-0 top-0 h-72" style={{ background: "radial-gradient(circle at top, rgba(217,154,30,0.18), transparent 40%)" }} />
-        <div className="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.8fr]">
+      {/* Premium Hero Section */}
+      <section className="relative overflow-hidden bg-transparent py-20 sm:py-32">
+        <div className="absolute inset-x-0 top-0 h-96" style={{ background: "radial-gradient(circle at 50% 0%, rgba(99,102,241,0.15), transparent 60%)" }} />
+        
+        <div className="mx-auto grid max-w-7xl gap-16 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] relative z-10">
           <motion.div 
             initial="hidden"
             animate="visible"
             variants={fadeIn}
-            className="relative flex flex-col justify-center rounded-4xl border border-white/10 bg-slate-950/80 p-10 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-14"
+            className="relative flex flex-col justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-10 shadow-xl sm:p-14 text-[var(--foreground)]"
           >
-            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300 shadow-sm shadow-cyan-500/10 self-start">
-              Trusted legal marketplace
+            <span className="inline-flex rounded-full border border-white/5 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300 shadow-sm self-start">
+              ✨ Trusted legal marketplace
             </span>
-            <h1 className="mt-8 text-5xl font-semibold tracking-tight text-white sm:text-6xl">
-              Find & Hire Expert Legal Counsel.
+            <h1 className="mt-8 text-5xl font-semibold tracking-tight text-white sm:text-6xl leading-[1.1]">
+              Find & Hire Expert <span className="text-[var(--brand-accent)]">Legal Counsel</span>.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-              LegalEase helps you connect with vetted lawyers, manage hiring, and keep legal support within reach—fast, secure, and professional.
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-400">
+              LegalEase connects you with vetted, independent lawyers. Manage contracts, process secure payments, and navigate legal affairs with trust and clarity.
             </p>
 
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Link
                 href="/browse"
-                className="inline-flex items-center justify-center rounded-full px-7 py-3 text-sm font-semibold shadow-[0_18px_60px_-28px_rgba(217,154,30,0.7)] transition hover:bg-[#f8c232]"
+                className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold shadow-[0_10px_25px_-5px_rgba(99,102,241,0.3)] transition hover:opacity-90 hover:scale-[1.01] duration-200"
                 style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
               >
                 Browse Lawyers
               </Link>
               <Link
                 href="#how"
-                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-7 py-3 text-sm font-medium text-slate-200 transition hover:text-white"
-                style={{ borderColor: "var(--brand-accent)" }}
+                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-8 py-3.5 text-sm font-medium text-slate-200 transition hover:bg-white/10 hover:text-white"
               >
                 How it works
               </Link>
             </div>
 
-            <div className="mt-12 grid gap-4 sm:grid-cols-3">
+            <div className="mt-12 grid gap-4 sm:grid-cols-3 border-t border-white/5 pt-8">
               <div className="rounded-3xl bg-white/5 p-5">
                 <p className="text-3xl font-semibold text-white">50+</p>
-                <p className="mt-3 text-sm text-slate-400">Trusted lawyers</p>
+                <p className="mt-2 text-xs uppercase tracking-wider text-slate-500">Verified Lawyers</p>
               </div>
               <div className="rounded-3xl bg-white/5 p-5">
                 <p className="text-3xl font-semibold text-white">99.9%</p>
-                <p className="mt-3 text-sm text-slate-400">Client satisfaction</p>
+                <p className="mt-2 text-xs uppercase tracking-wider text-slate-500">Satisfaction</p>
               </div>
               <div className="rounded-3xl bg-white/5 p-5">
                 <p className="text-3xl font-semibold text-white">Fast</p>
-                <p className="mt-3 text-sm text-slate-400">Verified hiring flow</p>
+                <p className="mt-2 text-xs uppercase tracking-wider text-slate-500">Hiring Flow</p>
               </div>
             </div>
           </motion.div>
@@ -254,7 +254,7 @@ export default function Home() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="relative flex items-center justify-center"
           >
-            <div className="absolute -right-14 top-10 h-52 w-52 rounded-full" style={{ backgroundColor: "rgba(217,154,30,0.10)" }} />
+            <div className="absolute -right-14 top-10 h-72 w-72 rounded-full filter blur-[80px]" style={{ backgroundColor: "rgba(99,102,241,0.12)" }} />
             
             <motion.div 
               key={carouselIndex}
@@ -262,7 +262,7 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-2xl shadow-slate-950/20"
+              className="relative w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-xl text-[var(--foreground)]"
             >
               <div className="flex items-center gap-4">
                 <div className="relative h-16 w-16 overflow-hidden rounded-3xl bg-slate-900/80">
@@ -277,26 +277,26 @@ export default function Home() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-xl">{carouselLawyers[carouselIndex].icon}</span>
-                    <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Featured Lawyer</p>
+                    <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Featured Lawyer</p>
                   </div>
                   <p className="mt-1 text-xl font-semibold text-white">{carouselLawyers[carouselIndex].name}</p>
                 </div>
               </div>
               
               <div className="mt-8 space-y-4">
-                <div className="rounded-3xl bg-white/5 p-4">
-                  <p className="text-sm text-slate-400">Specialization</p>
-                  <p className="mt-1 text-white">{carouselLawyers[carouselIndex].specialization}</p>
+                <div className="rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] p-4">
+                  <p className="text-xs uppercase tracking-wider text-slate-500">Specialization</p>
+                  <p className="mt-1 text-[var(--foreground)] font-medium">{carouselLawyers[carouselIndex].specialization}</p>
                 </div>
-                <div className="rounded-3xl bg-white/5 p-4">
-                  <p className="text-sm text-slate-400">Consultation Fee</p>
-                  <p className="mt-1 text-white">${carouselLawyers[carouselIndex].hourlyRate} / hour</p>
+                <div className="rounded-xl bg-[var(--surface-soft)] border border-[var(--border)] p-4">
+                  <p className="text-xs uppercase tracking-wider text-slate-500">Consultation Fee</p>
+                  <p className="mt-1 text-white font-medium">${carouselLawyers[carouselIndex].hourlyRate} / hour</p>
                 </div>
               </div>
 
               <div className="mt-8 flex flex-wrap gap-2">
                 {carouselLawyers[carouselIndex].tags.map((tag) => (
-                  <span key={tag} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] uppercase tracking-[0.3em] text-slate-300">
+                  <span key={tag} className="rounded-full border border-white/5 bg-white/5 px-3 py-1.5 text-[9px] uppercase tracking-[0.25em] text-slate-300">
                     {tag}
                   </span>
                 ))}
@@ -319,24 +319,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section id="how" className="bg-[#04111f] py-20 sm:py-28">
+      {/* Value Proposition Grid / How it works */}
+      <section id="how" className="bg-[#0b1329]/40 border-y border-white/5 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
-              Simple process
+            <span className="inline-flex rounded-full border border-white/5 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+              Value Proposition
             </span>
             <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              How it works
+              Professional Legal Hiring, Reimagined
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-400">
-              Three simple steps to get expert legal support.
+              Three simple steps to secure premier counsel and resolve your legal matters.
             </p>
           </div>
           <div className="mt-16 grid gap-8 sm:grid-cols-3">
             {steps.map((item) => (
-              <div key={item.step} className="group relative rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.7)] transition duration-300 hover:border-[var(--brand-accent)]/40">
-                <span className="text-6xl font-bold tracking-tight text-white/5 transition duration-300 group-hover:text-[var(--brand-accent)]/20">
+              <div key={item.step} className="group relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-md transition duration-300 hover:border-indigo-500/30 hover:shadow-lg text-[var(--foreground)]">
+                <span className="text-6xl font-bold tracking-tight text-white/5 transition duration-300 group-hover:text-[var(--brand-accent)]/15">
                   {item.step}
                 </span>
                 <h3 className="mt-4 text-xl font-semibold text-white">
@@ -351,25 +351,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Dynamic Featured Lawyers Section */}
-      <section className="bg-[#041927] py-20 sm:py-28">
+      {/* Live Experts / Featured Lawyers Section */}
+      <section className="bg-transparent py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
-              Experts Selected For You
+            <span className="inline-flex rounded-full border border-white/5 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+              Live Verified Specialists
             </span>
             <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Featured Lawyers
+              Featured Legal Experts
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-400">
-              Meet our latest legal counselors available to take your case.
+              Directly connect with high-caliber lawyers available for immediate consults.
             </p>
           </div>
 
           {loading ? (
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="animate-pulse rounded-4xl border border-white/10 bg-slate-950/60 p-6 space-y-6">
+                <div key={i} className="animate-pulse rounded-4xl border border-white/5 bg-[#0f172a]/40 p-6 space-y-6">
                   <div className="flex items-center gap-4">
                     <div className="h-16 w-16 rounded-3xl bg-white/5" />
                     <div className="flex-grow space-y-2">
@@ -393,15 +393,15 @@ export default function Home() {
                 <motion.div
                   key={lawyer.name}
                   variants={fadeIn}
-                  whileHover={{ scale: 1.02 }}
-                  className="group rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-xl transition hover:border-[var(--brand-accent)]/30"
+                  whileHover={{ scale: 1.01 }}
+                  className="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-md transition duration-300 hover:border-indigo-500/30 hover:shadow-lg text-[var(--foreground)]"
                 >
                   <div className="flex items-center gap-4">
                     <div className="relative h-16 w-16 overflow-hidden rounded-3xl bg-slate-900/80">
                       <Image src={lawyer.avatar || "/assets/logo.png"} alt={lawyer.name} fill sizes="64px" className="object-cover" />
                     </div>
                     <div>
-                      <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium text-slate-400">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[var(--brand-accent-emerald)]/10 px-2 py-0.5 text-[10px] font-semibold text-[var(--brand-accent-emerald)] border border-[var(--brand-accent-emerald)]/15">
                         ★ {lawyer.rating}
                       </span>
                       <h3 className="mt-1 text-lg font-semibold text-white group-hover:text-[var(--brand-accent)] transition">
@@ -416,7 +416,7 @@ export default function Home() {
                   <p className="mt-4 text-xs leading-5 text-slate-400 line-clamp-2">{lawyer.bio}</p>
                   <Link
                     href={`/browse/${lawyer.name}`}
-                    className="mt-6 flex w-full justify-center rounded-full border border-white/10 bg-white/5 px-6 py-2.5 text-xs font-semibold text-slate-200 transition hover:bg-[var(--brand-accent)] hover:text-[var(--brand-accent-contrast)] hover:border-[var(--brand-accent)]"
+                    className="mt-6 flex w-full justify-center rounded-full border border-white/10 bg-white/5 px-6 py-2.5 text-xs font-semibold text-slate-200 transition hover:bg-[var(--brand-accent)] hover:text-white hover:border-[var(--brand-accent)]"
                   >
                     View Details
                   </Link>
@@ -427,15 +427,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Extra Section 1: Top Legal Experts */}
-      <section className="bg-[#04111f] py-20 sm:py-28 border-t border-white/5">
+      {/* Top Legal Experts Section */}
+      <section className="bg-[#0b1329]/40 border-y border-white/5 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
-              Most Hired Specialists
+            <span className="inline-flex rounded-full border border-white/5 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-400">
+              Most Active Professionals
             </span>
             <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Top Legal Experts
+              Top Legal Specialists
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-400">
               Meet our most hired professionals on the platform.
@@ -444,13 +444,13 @@ export default function Home() {
 
           <div className="grid gap-8 sm:grid-cols-3 max-w-4xl mx-auto">
             {topExperts.map((lawyer) => (
-              <div key={lawyer.name} className="flex flex-col items-center rounded-4xl border border-white/5 bg-slate-950/40 p-8 text-center shadow-lg hover:border-white/10 transition duration-300">
+              <div key={lawyer.name} className="flex flex-col items-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 text-center shadow-md hover:border-slate-700 transition duration-300 text-[var(--foreground)]">
                 <div className="relative h-24 w-24 overflow-hidden rounded-full ring-2 ring-[var(--brand-accent)] bg-slate-900/80">
                   <Image src={lawyer.avatar || "/assets/logo.png"} alt={lawyer.name} fill sizes="96px" className="object-cover" />
                 </div>
                 <h3 className="mt-6 text-lg font-semibold text-white">{lawyer.name}</h3>
                 <p className="mt-1 text-xs text-slate-400 uppercase tracking-widest">{lawyer.specialization}</p>
-                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--brand-accent)]/10 px-3 py-1 text-xs font-medium text-[var(--brand-accent)]">
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[var(--brand-accent)]/10 px-3 py-1 text-xs font-semibold text-[var(--brand-accent)]">
                   {lawyer.hires} Hires Completed
                 </div>
               </div>
@@ -459,11 +459,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Extra Section 2: Legal Categories */}
-      <section className="bg-[#041927] py-20 sm:py-28 border-t border-white/5">
+      {/* Practice Areas Section */}
+      <section className="bg-transparent py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center mb-16">
-            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
+            <span className="inline-flex rounded-full border border-white/5 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-400">
               Explore Practice Areas
             </span>
             <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
@@ -478,7 +478,7 @@ export default function Home() {
               <Link 
                 key={area.title} 
                 href={`/browse?specialization=${encodeURIComponent(area.title)}`}
-                className="group rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-md transition duration-300 hover:border-[var(--brand-accent)]/40 hover:-translate-y-1 block"
+                className="group rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-md transition duration-300 hover:border-indigo-500/30 hover:-translate-y-1 block hover:shadow-lg text-[var(--foreground)]"
               >
                 <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-white/5 text-slate-300 transition duration-300 group-hover:bg-[var(--brand-accent)]/20 group-hover:text-[var(--brand-accent)]">
                   {area.icon}
@@ -495,27 +495,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="bg-[#04111f] py-20 sm:py-28">
+      {/* Testimonials Section */}
+      <section className="bg-[#0b1329]/40 border-y border-white/5 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
+            <span className="inline-flex rounded-full border border-white/5 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-400">
               Testimonials
             </span>
             <h2 className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              What our clients say
+              What Our Clients Say
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-400">
-              Real stories from people who found the right legal help through LegalEase.
+              Real stories from users who discovered trusted legal counsel.
             </p>
           </div>
           <div className="mt-16 grid gap-8 sm:grid-cols-3">
             {testimonials.map((t) => (
-              <div key={t.name} className="rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.7)]">
+              <div key={t.name} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-md text-[var(--foreground)]">
                 <StarRating rating={t.rating} />
                 <p className="mt-5 text-sm leading-7 text-slate-300">&ldquo;{t.content}&rdquo;</p>
-                <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-6">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-sm font-medium text-slate-300">
+                <div className="mt-6 flex items-center gap-3 border-t border-white/5 pt-6">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-sm font-semibold text-slate-300">
                     {t.name.split(" ").map((n) => n[0]).join("")}
                   </div>
                   <div>

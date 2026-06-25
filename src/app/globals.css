@@ -1,15 +1,33 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #04111f;
-  --foreground: #f8fafc;
-  --surface: rgba(10, 20, 40, 0.92);
-  --surface-soft: rgba(15, 30, 55, 0.82);
-  --border: rgba(255, 255, 255, 0.08);
-  --text-muted: #94a3b8;
-  --brand-primary: #082f5e;
-  --brand-accent: #d99a1e;
-  --brand-accent-contrast: #071422;
+  /* Default Light Mode Variables: Nordic Spruce & Frost */
+  --background: #f3f7f6; /* Frost/Cool Gray-White */
+  --foreground: #0f211c; /* Deep Forest/Spruce Dark */
+  --surface: #ffffff; /* Pure White card surface */
+  --surface-soft: #e5eeeb; /* Soft Sage Gray */
+  --border: rgba(15, 33, 28, 0.08); /* Spruce border */
+  --text-muted: #556b66; /* Muted Sage */
+  --brand-primary: #7d9690; /* Sage Gray primary */
+  --brand-accent: #0a7b70; /* Boutique Spruce Teal */
+  --brand-accent-emerald: #0d9488; /* Primary Teal Accent */
+  --brand-accent-contrast: #ffffff;
+}
+
+/* If html class is dark */
+html.dark {
+  --background: #08100e; /* Deep Spruce Black */
+  --foreground: #f3f7f6; /* Frost White */
+  --surface: #0d1a17; /* Deep Sage Dark */
+  --surface-soft: #142824; /* Deep Sage Medium */
+  --border: rgba(243, 247, 246, 0.06);
+  --text-muted: #9cb3ae; /* Frost Sage Muted */
+  --brand-primary: #556b66;
+  --brand-accent: #2dd4bf; /* Mint Teal */
+  --brand-accent-emerald: #14b8a6;
+  --brand-accent-contrast: #08100e;
 }
 
 :root {
@@ -19,15 +37,34 @@
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(217, 154, 30, 0.08), transparent 35%),
-    var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+html.dark body {
+  background:
+    radial-gradient(circle at 50% -20%, rgba(45, 212, 191, 0.12), transparent 50%),
+    radial-gradient(circle at 10% 20%, rgba(13, 26, 23, 0.6), transparent 40%),
+    var(--background);
+}
+
+html.light body {
+  background:
+    radial-gradient(circle at 50% -20%, rgba(10, 123, 112, 0.04), transparent 50%),
+    var(--background);
+}
+
+/* Serif Typography for High-End Legal Aesthetic */
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-playfair), Georgia, serif !important;
+  color: var(--foreground);
 }
 
 ::selection {
-  background: rgba(217, 154, 30, 0.22);
+  background: rgba(45, 212, 191, 0.3);
   color: var(--foreground);
 }
 
@@ -35,6 +72,24 @@ button,
 input,
 textarea {
   font: inherit;
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+html.dark ::-webkit-scrollbar-track {
+  background: #08100e;
+}
+html.light ::-webkit-scrollbar-track {
+  background: #f3f7f6;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-accent);
 }
 
 /* Utility classes fallback for inline styles */

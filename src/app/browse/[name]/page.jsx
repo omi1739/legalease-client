@@ -220,7 +220,7 @@ export default function LawyerDetails() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#04111f] py-16 px-4">
+      <div className="min-h-screen bg-transparent py-16 px-4">
         <div className="mx-auto max-w-5xl animate-pulse space-y-8">
           <div className="h-6 w-32 bg-white/5 rounded-full" />
           <div className="grid gap-8 md:grid-cols-[1fr_2fr]">
@@ -239,7 +239,7 @@ export default function LawyerDetails() {
 
   if (error || !lawyer) {
     return (
-      <div className="min-h-screen bg-[#04111f] flex items-center justify-center py-16 px-4">
+      <div className="min-h-screen bg-transparent flex items-center justify-center py-16 px-4">
         <div className="text-center rounded-4xl border border-white/5 bg-slate-950/20 p-12 max-w-md">
           <HelpCircle />
           <h3 className="text-xl font-semibold text-white">Profile unavailable</h3>
@@ -258,7 +258,7 @@ export default function LawyerDetails() {
   }
 
   return (
-    <div className="min-h-screen bg-[#04111f] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
         {/* Back navigation */}
         <Link
@@ -273,7 +273,7 @@ export default function LawyerDetails() {
           
           {/* Left Column: Avatar & Quick Action */}
           <div className="space-y-6">
-            <div className="relative overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-xl backdrop-blur-md">
+            <div className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-md text-[var(--foreground)]">
               <div className="relative h-64 w-full overflow-hidden rounded-3xl bg-slate-900 ring-1 ring-white/10">
                 <Image
                   src={lawyer.avatar || "/assets/logo.png"}
@@ -309,10 +309,10 @@ export default function LawyerDetails() {
                   </p>
                 </div>
 
-                <button
+                 <button
                   onClick={handleHireClick}
                   disabled={!lawyer.isAvailable}
-                  className="w-full justify-center flex rounded-full px-8 py-3 text-sm font-semibold shadow-[0_18px_60px_-28px_rgba(217,154,30,0.7)] transition hover:bg-[#f8c232] cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="w-full justify-center flex rounded-full px-8 py-3 text-sm font-semibold shadow-[0_10px_25px_-5px_rgba(99,102,241,0.3)] transition hover:opacity-90 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                   style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
                 >
                   {lawyer.isAvailable ? "Hire Professional" : "Currently Fully Booked"}
@@ -323,7 +323,7 @@ export default function LawyerDetails() {
 
           {/* Right Column: Information Tabs & Comments */}
           <div className="space-y-6">
-            <div className="rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-xl backdrop-blur-md">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 shadow-md text-[var(--foreground)]">
               <div>
                 <p className="text-xs uppercase tracking-[0.25em] text-[var(--brand-accent)] font-semibold">
                   {lawyer.specialization} Expert

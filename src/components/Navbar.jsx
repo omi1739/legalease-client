@@ -19,6 +19,26 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchVal, setSearchVal] = useState("");
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const activeTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+    setTheme(activeTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    if (nextTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
 
   const role = session?.user?.role || "user";
 
@@ -86,15 +106,15 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#041927]/95 backdrop-blur-xl shadow-2xl shadow-slate-950/10">
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-md shadow-xl">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link href="/" className="flex items-center gap-3" onClick={closeMobile}>
           <img src="/assets/logo.png" alt="LegalEase Logo" className="h-10 w-auto object-contain" />
           <div>
-            <p className="text-xs uppercase tracking-[0.32em] text-slate-400">
+            <p className="text-xs uppercase tracking-[0.32em] text-[var(--text-muted)]">
               LegalEase
             </p>
-            <p className="text-sm font-semibold text-white">
+            <p className="text-sm font-semibold text-[var(--foreground)]">
               Legal marketplace
             </p>
           </div>
@@ -102,7 +122,7 @@ const Navbar = () => {
 
         <button
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-slate-950/80 text-slate-100 transition hover:bg-slate-900/90 sm:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] sm:hidden"
           onClick={() => setMobileOpen((c) => !c)}
           aria-label="Toggle navigation menu"
           aria-expanded={mobileOpen}
@@ -119,7 +139,7 @@ const Navbar = () => {
         </button>
 
         <div className="hidden flex-1 items-center justify-end gap-4 sm:flex">
-          <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-slate-950/70 p-2 shadow-sm shadow-slate-950/10">
+          <nav className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-soft)] p-2 shadow-sm">
             {navLinks.map((link) => {
               const active = pathname === link.href;
               return (
@@ -128,8 +148,8 @@ const Navbar = () => {
                   href={link.href}
                   className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                     active
-                      ? "bg-[#0b3c74] text-white"
-                      : "text-slate-300 hover:text-white"
+                      ? "bg-[var(--brand-accent)] text-[var(--brand-accent-contrast)] shadow-lg shadow-[var(--brand-accent)]/20"
+                      : "text-[var(--text-muted)] hover:text-[var(--foreground)]"
                   }`}
                 >
                   {link.label}
@@ -141,7 +161,7 @@ const Navbar = () => {
               <div className="relative dashboard-dropdown">
                 <button
                   onClick={() => setDropdownOpen((c) => !c)}
-                  className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition hover:text-white"
+                  className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:text-[var(--foreground)]"
                   aria-expanded={dropdownOpen}
                   aria-haspopup="true"
                 >
@@ -155,13 +175,13 @@ const Navbar = () => {
                   </svg>
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute left-0 top-full mt-2 w-48 rounded-3xl border border-white/10 bg-slate-950/95 p-3 shadow-2xl shadow-slate-950/20">
+                  <div className="absolute left-0 top-full mt-2 w-48 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-3 shadow-2xl">
                     {dashboardLinks.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
                         onClick={() => setDropdownOpen(false)}
-                        className="block rounded-2xl px-4 py-2 text-sm text-slate-200 transition hover:bg-slate-900"
+                        className="block rounded-2xl px-4 py-2 text-sm text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
                       >
                         {item.label}
                       </Link>
@@ -173,25 +193,41 @@ const Navbar = () => {
           </nav>
 
           <div className="flex items-center gap-3">
-            <div className="hidden items-center rounded-full border border-white/10 bg-slate-950/80 px-3 py-2 text-slate-200 shadow-sm shadow-slate-950/10 lg:flex">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 dark:border-zinc-800 bg-transparent text-slate-800 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-zinc-800 cursor-pointer"
+              aria-label="Toggle Theme"
+            >
+              {theme === "dark" ? (
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                </svg>
+              ) : (
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
+            <div className="hidden items-center rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-[var(--foreground)] shadow-sm lg:flex">
               <input
                 type="search"
                 placeholder="Search lawyers"
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
                 onKeyDown={handleSearchKeyDown}
-                className="w-48 bg-transparent text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none"
+                className="w-48 bg-transparent text-sm text-[var(--foreground)] placeholder:text-[var(--text-muted)] focus:outline-none"
               />
             </div>
 
             {session ? (
               <div className="flex items-center gap-3">
-                <span className="text-sm text-slate-300 font-medium hidden md:inline">
+                <span className="text-sm text-[var(--text-muted)] font-medium hidden md:inline">
                   {session.user.name}
                 </span>
                 <button
                   onClick={handleLogout}
-                  className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-slate-200 transition hover:border-white/20 hover:text-white cursor-pointer"
+                  className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-5 py-2 text-sm font-medium text-[var(--foreground)] transition hover:opacity-90 cursor-pointer"
                 >
                   Logout
                 </button>
@@ -200,13 +236,13 @@ const Navbar = () => {
               <>
                 <Link
                   href="/signup"
-                  className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-slate-200 transition hover:border-white/20 hover:text-white"
+                  className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-5 py-2 text-sm font-medium text-[var(--foreground)] transition hover:opacity-90"
                 >
                   Sign Up
                 </Link>
                 <Link
                   href="/login"
-                  className="rounded-full px-5 py-2 text-sm font-semibold shadow-[0_14px_30px_-10px_rgba(217,154,30,0.25)] transition hover:bg-[#fabf4a]"
+                  className="rounded-full px-5 py-2 text-sm font-semibold shadow-[0_10px_25px_-5px_rgba(99,102,241,0.3)] transition hover:opacity-90"
                   style={{
                     backgroundColor: "var(--brand-accent)",
                     color: "var(--brand-accent-contrast)",
@@ -221,8 +257,26 @@ const Navbar = () => {
       </div>
 
       {mobileOpen && (
-        <div className="sm:hidden border-t border-white/10 bg-[#041927]/95 px-4 py-5 backdrop-blur-xl">
+        <div className="sm:hidden border-t border-[var(--border)] bg-[var(--background)]/95 px-4 py-5 backdrop-blur-xl">
           <div className="space-y-3">
+            <div className="flex items-center justify-between rounded-full border border-white/10 bg-slate-950/80 px-4 py-2.5 text-slate-200 w-full mb-4">
+              <span className="text-sm font-medium">Theme Mode</span>
+              <button
+                onClick={toggleTheme}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 dark:border-zinc-800 bg-transparent transition hover:bg-slate-100 dark:hover:bg-zinc-800"
+              >
+                {theme === "dark" ? (
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                  </svg>
+                ) : (
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                )}
+              </button>
+            </div>
+
             <div className="flex items-center rounded-full border border-white/10 bg-slate-950/80 px-3 py-2 text-slate-200 shadow-sm shadow-slate-950/10 w-full mb-4">
               <input
                 type="search"

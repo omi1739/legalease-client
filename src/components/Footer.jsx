@@ -26,12 +26,12 @@ const Footer = () => {
   };
 
   return (
-    <footer className="border-t border-white/10 bg-[#041927] text-slate-200">
+    <footer className="border-t border-[var(--border)] bg-[var(--surface-soft)] text-[var(--foreground)]">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_1.5fr_1fr]">
           <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <div className="relative h-12 w-12 overflow-hidden rounded-3xl bg-slate-950/80 ring-1 ring-white/10">
+              <div className="relative h-12 w-12 overflow-hidden rounded-3xl bg-[var(--surface)] ring-1 ring-[var(--border)]">
                 <Image
                   src="/assets/logo.png"
                   alt="LegalEase logo"
@@ -40,15 +40,15 @@ const Footer = () => {
                 />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">
                   LegalEase
                 </p>
-                <p className="text-lg font-semibold text-white">
+                <p className="text-lg font-semibold text-[var(--foreground)]">
                   Smart legal hiring
                 </p>
               </div>
             </div>
-            <p className="max-w-md text-sm leading-7 text-slate-400">
+            <p className="max-w-md text-sm leading-7 text-[var(--text-muted)]">
               LegalEase connects clients and lawyers through a polished
               marketplace built for trust, transparency, and fast hiring.
             </p>
@@ -57,7 +57,7 @@ const Footer = () => {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-slate-950/80 text-slate-300 transition hover:border-[var(--brand-accent)] hover:text-[var(--brand-accent)]"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] transition hover:border-[var(--brand-accent)] hover:text-[var(--brand-accent)]"
                   aria-label={item.label}
                 >
                   <svg
@@ -74,7 +74,7 @@ const Footer = () => {
 
           <div className="grid gap-8 sm:grid-cols-2">
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-[var(--text-muted)]">
                 Quick Links
               </h3>
               <ul className="mt-6 space-y-3 text-sm">
@@ -82,7 +82,7 @@ const Footer = () => {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-slate-400 transition hover:text-white"
+                      className="text-[var(--text-muted)] transition hover:text-[var(--foreground)]"
                     >
                       {link.label}
                     </Link>
@@ -91,22 +91,22 @@ const Footer = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-[var(--text-muted)]">
                 Contact
               </h3>
               <ul className="mt-6 space-y-3 text-sm">
-                <li className="text-slate-400">contact@legalease.com</li>
-                <li className="text-slate-400">+880-18461993103</li>
-                <li className="text-slate-400">Banasree, Dhaka</li>
+                <li className="text-[var(--text-muted)]">contact@legalease.com</li>
+                <li className="text-[var(--text-muted)]">+880-18461993103</li>
+                <li className="text-[var(--text-muted)]">Banasree, Dhaka</li>
               </ul>
             </div>
           </div>
 
-          <div className="rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-[0_25px_60px_-30px_rgba(0,0,0,0.7)]">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-md">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.3em] text-[var(--text-muted)]">
               Newsletter
             </h3>
-            <p className="mt-4 text-sm leading-7 text-slate-400">
+            <p className="mt-4 text-sm leading-7 text-[var(--text-muted)]">
               Stay updated with new lawyers, practice areas, and legal insights.
             </p>
             <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
@@ -116,11 +116,11 @@ const Footer = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
                 required
-                className="rounded-full border border-white/10 bg-slate-900/90 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-[var(--brand-accent)]/50 transition"
+                className="rounded-full border border-[var(--border)] bg-[var(--surface-soft)] px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--brand-accent)]/50 transition"
               />
               <button
                 type="submit"
-                className="rounded-full px-5 py-3 text-sm font-semibold transition hover:bg-[#f8c232]"
+                className="rounded-full px-5 py-3 text-sm font-semibold transition hover:opacity-90"
                 style={{
                   backgroundColor: "var(--brand-accent)",
                   color: "var(--brand-accent-contrast)",
@@ -133,7 +133,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t border-white/10 bg-[#031020]/95 px-4 py-6 text-center text-sm text-slate-500 sm:px-6">
+      <div className="border-t border-[var(--border)] bg-[var(--background)] px-4 py-6 text-center text-sm text-[var(--text-muted)] sm:px-6">
         <p>&copy; 2026 LegalEase. All rights reserved.</p>
       </div>
     </footer>

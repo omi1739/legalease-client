@@ -68,9 +68,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[85vh] items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-[#04111f]">
-      <div className="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/10 bg-slate-950/80 p-8 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-10">
-        <div className="absolute inset-x-0 top-0 h-40" style={{ background: "radial-gradient(circle at top, rgba(217,154,30,0.12), transparent 70%)" }} />
+    <div className="flex min-h-[85vh] items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-transparent">
+      <div className="relative w-full max-w-md overflow-hidden rounded-4xl border border-white/5 bg-slate-950/80 p-8 shadow-[0_40px_120px_-48px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-10">
+        <div className="absolute inset-x-0 top-0 h-40" style={{ background: "radial-gradient(circle at top, rgba(99,102,241,0.08), transparent 70%)" }} />
         
         <div className="relative text-center">
           <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
@@ -150,7 +150,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full justify-center rounded-full px-8 py-3 text-sm font-semibold shadow-[0_18px_60px_-28px_rgba(217,154,30,0.7)] transition hover:bg-[#f8c232] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex w-full justify-center rounded-full px-8 py-3 text-sm font-semibold shadow-[0_10px_25px_-5px_rgba(99,102,241,0.3)] transition hover:opacity-90 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ backgroundColor: "var(--brand-accent)", color: "var(--brand-accent-contrast)" }}
             >
               {loading ? "Signing In..." : "Sign In"}

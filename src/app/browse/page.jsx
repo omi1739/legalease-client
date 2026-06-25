@@ -144,11 +144,11 @@ export default function BrowseLawyers() {
   };
 
   return (
-    <div className="min-h-screen bg-[#04111f] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-12 relative">
-          <div className="absolute inset-x-0 -top-10 h-32" style={{ background: "radial-gradient(circle at top, rgba(217,154,30,0.1), transparent 60%)" }} />
+          <div className="absolute inset-x-0 -top-10 h-32" style={{ background: "radial-gradient(circle at top, rgba(99,102,241,0.08), transparent 60%)" }} />
           <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-slate-300">
             Legal Marketplace
           </span>
@@ -163,7 +163,7 @@ export default function BrowseLawyers() {
         {/* Layout Grid */}
         <div className="grid gap-8 lg:grid-cols-[280px_1fr]">
           {/* Filters Sidebar */}
-          <aside className="rounded-3xl border border-white/10 bg-slate-950/80 p-6 self-start shadow-xl backdrop-blur-md">
+          <aside className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 self-start shadow-md text-[var(--foreground)]">
             <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
               <div className="flex items-center gap-2 text-white font-semibold">
                 <SlidersHorizontal className="h-4 w-4 text-[var(--brand-accent)]" />
@@ -252,7 +252,7 @@ export default function BrowseLawyers() {
           {/* Main Content Area */}
           <main className="space-y-6">
             {/* Search & Sort Header */}
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-between rounded-3xl border border-white/10 bg-slate-950/40 p-4 backdrop-blur-sm">
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-between rounded-xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm text-[var(--foreground)]">
               {/* Global Search Bar */}
               <div className="relative w-full sm:max-w-md">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-500" />
@@ -325,7 +325,7 @@ export default function BrowseLawyers() {
               </div>
             ) : lawyers.length === 0 ? (
               // Empty State
-              <div className="rounded-4xl border border-white/5 bg-slate-950/20 py-20 px-4 text-center">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)]/50 py-20 px-4 text-center text-[var(--foreground)]">
                 <Award className="h-12 w-12 text-slate-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-white">No lawyers found</h3>
                 <p className="mt-2 text-sm text-slate-400 max-w-sm mx-auto">
@@ -352,7 +352,7 @@ export default function BrowseLawyers() {
                       key={lawyer.name}
                       variants={cardVariants}
                       whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                      className="group flex flex-col justify-between rounded-4xl border border-white/10 bg-slate-950/80 p-6 shadow-md transition duration-300 hover:border-[var(--brand-accent)]/30"
+                      className="group flex flex-col justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-md transition duration-300 hover:border-indigo-500/30 hover:shadow-lg text-[var(--foreground)]"
                     >
                       <div>
                         {/* Avatar & Name Header */}
