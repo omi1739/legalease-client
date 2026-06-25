@@ -22,7 +22,9 @@ export default function Comments() {
     setError("");
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/comments/user/${session.user.email}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/comments/user/${session.user.email}`, {
+        credentials: "include",
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (!res.ok) {
@@ -47,8 +49,10 @@ export default function Comments() {
     if (!confirm("Are you sure you want to delete this review?")) return;
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/comments/${id}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/comments/${id}`, {
         method: "DELETE",
+        credentials: "include",
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (res.ok) {
@@ -74,8 +78,10 @@ export default function Comments() {
     setSubmittingEdit(true);
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/comments/${editingComment._id}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/comments/${editingComment._id}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           ...(token ? { 'Authorization': `Bearer ${token}` } : {})

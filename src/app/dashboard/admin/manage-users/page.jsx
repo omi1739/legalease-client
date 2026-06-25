@@ -15,7 +15,9 @@ export default function ManageUsers() {
     setError("");
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch("http://localhost:5000/admin/users", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/admin/users`, {
+        credentials: "include",
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (!res.ok) {
@@ -40,8 +42,10 @@ export default function ManageUsers() {
     setUpdatingEmail(email);
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/admin/users/${email}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/admin/users/${email}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           ...(token ? { 'Authorization': `Bearer ${token}` } : {})
@@ -66,8 +70,10 @@ export default function ManageUsers() {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/admin/users/${id}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/admin/users/${id}`, {
         method: "DELETE",
+        credentials: "include",
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (res.ok) {

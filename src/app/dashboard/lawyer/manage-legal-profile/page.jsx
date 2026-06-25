@@ -26,7 +26,10 @@ export default function ManageLegalProfile() {
       setLoadingProfile(true);
       setError("");
       try {
-        const res = await fetch(`http://localhost:5000/lawyers/email/${session.user.email}`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/lawyers/email/${session.user.email}`, {
+          credentials: "include"
+        });
         if (res.ok) {
           const data = await res.json();
           setSpecialization(data.specialization || "Family Law");
@@ -90,8 +93,10 @@ export default function ManageLegalProfile() {
 
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch("http://localhost:5000/lawyers", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/lawyers`, {
         method: "PUT",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           ...(token ? { 'Authorization': `Bearer ${token}` } : {})

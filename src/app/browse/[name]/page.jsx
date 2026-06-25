@@ -74,7 +74,8 @@ export default function LawyerDetails() {
 
   const fetchComments = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/comments/${encodeURIComponent(decodedName)}`);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/comments/${encodeURIComponent(decodedName)}`);
       if (res.ok) {
         const data = await res.json();
         setComments(data);
@@ -88,7 +89,9 @@ export default function LawyerDetails() {
     if (!session?.user?.email) return;
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/hires/user/${session.user.email}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/hires/user/${session.user.email}`, {
+        credentials: "include",
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (res.ok) {
@@ -108,7 +111,8 @@ export default function LawyerDetails() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch(`http://localhost:5000/lawyers/${encodeURIComponent(decodedName)}`);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/lawyers/${encodeURIComponent(decodedName)}`);
         if (!res.ok) {
           if (res.status === 404) {
             throw new Error("Lawyer profile not found.");
@@ -146,8 +150,10 @@ export default function LawyerDetails() {
     setHiringProcessing(true);
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch('http://localhost:5000/hires', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/hires`, {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
           ...(token ? { 'Authorization': `Bearer ${token}` } : {})
@@ -182,8 +188,10 @@ export default function LawyerDetails() {
     setSubmittingComment(true);
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch('http://localhost:5000/comments', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/comments`, {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
           ...(token ? { 'Authorization': `Bearer ${token}` } : {})

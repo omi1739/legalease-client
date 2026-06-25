@@ -27,8 +27,10 @@ export default function UpdateProfile() {
     setMessage("");
 
     try {
-      const response = await fetch(`http://localhost:5000/users/${session.user.email}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const response = await fetch(`${apiUrl}/users/${session.user.email}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

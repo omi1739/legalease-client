@@ -120,7 +120,8 @@ export default function Home() {
   useEffect(() => {
     const getLawyers = async () => {
       try {
-        const res = await fetch("http://localhost:5000/lawyers?limit=12");
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/lawyers?limit=12`);
         if (res.ok) {
           const data = await res.json();
           const list = data.lawyers || [];

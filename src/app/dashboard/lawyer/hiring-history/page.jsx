@@ -16,7 +16,9 @@ export default function LawyerHiringHistory() {
     setError("");
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/hires/lawyer/${session.user.email}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/hires/lawyer/${session.user.email}`, {
+        credentials: "include",
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (!res.ok) {
@@ -41,8 +43,10 @@ export default function LawyerHiringHistory() {
     setUpdatingId(id);
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/hires/${id}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/hires/${id}`, {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           ...(token ? { 'Authorization': `Bearer ${token}` } : {})

@@ -20,7 +20,9 @@ export default function AdminAnalytics() {
       setError("");
       try {
         const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-        const res = await fetch("http://localhost:5000/admin/analytics", {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/admin/analytics`, {
+          credentials: "include",
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (!res.ok) {

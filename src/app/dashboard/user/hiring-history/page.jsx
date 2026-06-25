@@ -25,7 +25,9 @@ export default function HiringHistory() {
     setError("");
     try {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-      const res = await fetch(`http://localhost:5000/hires/user/${session.user.email}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/hires/user/${session.user.email}`, {
+        credentials: "include",
         headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (!res.ok) {
@@ -69,8 +71,10 @@ export default function HiringHistory() {
       const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
       
       // Step 1: Create Stripe Payment Intent on Backend
-      const intentRes = await fetch("http://localhost:5000/payments/create-payment-intent", {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const intentRes = await fetch(`${apiUrl}/payments/create-payment-intent`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           ...(token ? { 'Authorization': `Bearer ${token}` } : {})
@@ -88,8 +92,11 @@ export default function HiringHistory() {
       // Step 2: Simulate client-side validation and PATCH update
       setTimeout(async () => {
         try {
-          const updateRes = await fetch(`http://localhost:5000/hires/${selectedHire._id}`, {
+          const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+          const updateRes = await fetch(`${apiUrl}/hires/${selectedHire._id}`, {
             method: "PATCH",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
               ...(token ? { 'Authorization': `Bearer ${token}` } : {})

@@ -86,7 +86,8 @@ export default function BrowseLawyers() {
         queryParams.append("isAvailable", "true");
       }
 
-      const res = await fetch(`http://localhost:5000/lawyers?${queryParams.toString()}`);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/lawyers?${queryParams.toString()}`);
       if (!res.ok) {
         throw new Error("Failed to fetch lawyers data from the server.");
       }

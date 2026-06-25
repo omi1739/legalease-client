@@ -15,7 +15,9 @@ export default function AllTransactions() {
       setError("");
       try {
         const token = document.cookie.split('; ').find(row => row.startsWith('better-auth.session_token='))?.split('=')[1];
-        const res = await fetch("http://localhost:5000/admin/transactions", {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/admin/transactions`, {
+          credentials: "include",
           headers: token ? { 'Authorization': `Bearer ${token}` } : {}
         });
         if (!res.ok) {
